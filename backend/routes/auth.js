@@ -45,15 +45,14 @@ router.post('/register', async (req, res) => {
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
-
         // Validate input
-        if (!username || !password) {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
             return res.status(400).json({ msg: "All fields are required" });
         }
 
-        // Find user
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ msg: "User not found" });
         }
