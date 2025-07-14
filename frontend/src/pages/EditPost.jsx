@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function EditPost() {
     const { id } = useParams();
@@ -17,6 +18,7 @@ function EditPost() {
                 setContent(res.data.content);
             } catch (err) {
                 setMsg('⚠️ Failed to fetch post',err);
+                toast.error('Failed to fetch Post');
             }
         };
         fetchPost();
@@ -38,6 +40,7 @@ function EditPost() {
             navigate(`/post/${id}`);
         } catch (err) {
             setMsg('⚠️ Failed to update post',err);
+            toast.error('Failed to update post');
         }
     };
 

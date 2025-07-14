@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import toast from 'react-hot-toast';
 export default function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -18,9 +18,11 @@ export default function Register() {
             });
 
             setMsg(res.data.msg || 'Registered successfully!');
+            toast.success('Registered successfully!')
         } catch (error) {
             console.error(error);
             setMsg(error.response?.data?.msg || 'Registration failed');
+            toast.error('Registration failed');
         }
     };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function PostDetails() {
     const { id } = useParams();
@@ -42,8 +43,10 @@ function PostDetails() {
                 },
             });
             navigate('/');
+            toast.success('Post Deleted')
         } catch (err) {
             alert('Failed to delete post',err);
+            toast.error('Failed to delete post');
         }
     };
 

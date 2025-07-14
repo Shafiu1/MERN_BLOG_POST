@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function Login({ setUser }) {
     const [email, setEmail] = useState('');
@@ -27,9 +28,11 @@ function Login({ setUser }) {
 
             setUser(res.data.user);
             setMsg('Login successful!');
+            toast.success("Login successful");
         } catch (err) {
             setMsg(err.response?.data?.msg || 'Login failed');
             console.log("Login unsuccessful");
+            toast.error('Login Unsuccessful');
         }
     };
 

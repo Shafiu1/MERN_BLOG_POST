@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function CreatePost() {
     const [title, setTitle] = useState('');
@@ -33,6 +34,7 @@ function CreatePost() {
             navigate('/');
         } catch (err) {
             console.error('Post creation failed:', err.message);
+            toast.error('Post creation failed');
         }
     };
 

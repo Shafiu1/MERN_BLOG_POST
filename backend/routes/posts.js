@@ -68,19 +68,23 @@ router.put('/:id', authMiddleware, async (req, res) => {
 // DELETE /api/posts/:id
 router.delete('/:id', authMiddleware, async (req, res) => {
     try {
+        console.log('🔐 Authenticated user ID:', req.user.id);
         const post = await Post.findById(req.params.id);
+        console.log('📝 Post found:', post);
+
         if (!post) return res.status(404).json({ msg: 'Post not found' });
 
-        // Allow only the author to delete
         if (post.author.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'Not authorized' });
         }
 
-        await post.remove();
+        await post.deleteOne(); // Use deleteOne instead of remove (remove is deprecated)
         res.status(200).json({ msg: 'Post deleted' });
     } catch (err) {
+        console.error('❌ DELETE error:', err);
         res.status(500).json({ msg: 'Server error', error: err.message });
     }
 });
+
 
 module.exports = router;

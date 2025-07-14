@@ -29,30 +29,28 @@ function App() {
   return (
     <>
       {/* Navigation bar */}
-      <nav className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center shadow-md">
-        <div className="space-x-4">
-          <Link to="/" className="transform transition-300 hover:text-gray-500">Home</Link>
-          {!user && <Link to="/login" className="transform transition-300  hover:text-gray-500">Login</Link>}
-          {!user && <Link to="/register" className="transform transition-300 hover:text-gray-500">Register</Link>}
+      <nav className="bg-gray-800 text-white px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0">
+        <div className="flex gap-4">
+          <Link to="/" className="hover:underline">Home</Link>
+          {!user && <Link to="/login" className="hover:underline">Login</Link>}
+          {!user && <Link to="/register" className="hover:underline">Register</Link>}
           {user && (
             <>
-              <Link to="/create" className="transform transition-300  hover:text-gray-500">Create Post</Link>
+              <Link to="/create" className="hover:underline">Create Post</Link>
             </>
           )}
         </div>
-
+        
         {user && (
-          <div className="flex items-center gap-4">
-            <span className="text-sm">👋 Welcome, <strong>{user.username}</strong></span>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
-            >
+          <div className="flex items-center gap-3">
+            <span className="text-sm">Welcome, {user.username}</span>
+            <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
               Logout
             </button>
           </div>
         )}
       </nav>
+
 
       {/* Routes */}
       <div className="p-6 max-w-4xl mx-auto bg-gray-200">
