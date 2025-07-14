@@ -25,34 +25,50 @@ export default function Register() {
     };
 
     return (
-        <form onSubmit={handleRegister}>
-            <h2>Register</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-            />
-            <br />
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <br />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
-            <br />
-            <button type="submit">Register</button>
-            {msg && <p>{msg}</p>}
-        </form>
+        <div className="max-w-md mx-auto mt-12 p-6 bg-white rounded shadow">
+            <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Register</h2>
+
+            {msg && (
+                <p className="text-center mb-4 text-sm text-red-600">
+                    {msg}
+                </p>
+            )}
+
+            <form onSubmit={handleRegister} className="space-y-4">
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+
+                <button
+                    type="submit"
+                    className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+                >
+                    Register
+                </button>
+            </form>
+        </div>
     );
 }

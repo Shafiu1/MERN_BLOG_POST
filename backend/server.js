@@ -9,9 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-const postRoutes = require('./routes/posts');
-app.use('/api/posts', postRoutes);
+
 
 // DB & Server
 mongoose.connect(process.env.MONGO_URI)
@@ -25,3 +23,7 @@ mongoose.connect(process.env.MONGO_URI)
 const authRoutes = require("./routes/auth");
 
 app.use("/api/auth", authRoutes);
+
+//Posts Routes
+const postRoutes = require('./routes/posts');
+app.use('/api/posts', postRoutes);
