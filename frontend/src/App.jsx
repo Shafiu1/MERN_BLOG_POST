@@ -31,12 +31,12 @@ function App() {
       {/* Navigation bar */}
       <nav className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center shadow-md">
         <div className="space-x-4">
-          <Link to="/" className="hover:underline">Home</Link>
-          {!user && <Link to="/login" className="hover:underline">Login</Link>}
-          {!user && <Link to="/register" className="hover:underline">Register</Link>}
+          <Link to="/" className="transform transition-300 hover:text-gray-500">Home</Link>
+          {!user && <Link to="/login" className="transform transition-300  hover:text-gray-500">Login</Link>}
+          {!user && <Link to="/register" className="transform transition-300 hover:text-gray-500">Register</Link>}
           {user && (
             <>
-              <Link to="/create" className="hover:underline">Create Post</Link>
+              <Link to="/create" className="transform transition-300  hover:text-gray-500">Create Post</Link>
             </>
           )}
         </div>
@@ -55,7 +55,7 @@ function App() {
       </nav>
 
       {/* Routes */}
-      <div className="p-6 max-w-4xl mx-auto">
+      <div className="p-6 max-w-4xl mx-auto bg-gray-200">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
