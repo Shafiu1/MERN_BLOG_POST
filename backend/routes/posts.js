@@ -86,5 +86,26 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 });
 
+router.put('/like/:id', authMiddleware, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) return res.status(404).json({ msg: 'Post not found' });
+
+        const userId = req.user.id;
+
+        if (post.likes.includes(userId)) {
+            post.likes = post.likes.filter(id => id.toString() !== userId);
+        } else {
+            post.likes.push(userId);
+        }
+
+        await post.save();
+        res.status(200).json({ likes: post.likes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Server error' });
+    }
+});
+
 
 module.exports = router;

@@ -10,6 +10,8 @@ function PostDetails() {
     const [commentText, setCommentText] = useState('');
     const [error, setError] = useState('');
     const [user, setUser] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
 
     // Load user
     useEffect(() => {
@@ -25,6 +27,9 @@ function PostDetails() {
             try {
                 const res = await axios.get(`http://localhost:5000/api/posts/${id}`);
                 setPost(res.data);
+                setLikeCount(res.data.likes?.length || 0);
+                const userId=JSON.parse(localStorage.getItem('user'))?.id;
+                setLiked(res.data.likes?.includes(userId));
             } catch (err) {
                 setError('Post not found',err);
             }
@@ -87,6 +92,31 @@ function PostDetails() {
             console.error('Failed to post comment', err);
         }
     };
+    
+    //handle like button
+    const handleLike = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('You must be logged in to like.');
+            return;
+        }
+        try {
+            const res = await axios.put(
+                `http://localhost:5000/api/posts/like/${id}`,
+                {},
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            console.log('✅ Like sent');
+            const updatedLikes = res.data.likes;
+            setLikeCount(updatedLikes.length);
+            const userId = JSON.parse(localStorage.getItem('user'))?.id;
+            setLiked(updatedLikes.includes(userId));
+        } catch (err) {
+            console.error('Failed to like/dislike post', err);
+        }
+    };
 
 
     if (error) return <p>{error}</p>;
@@ -123,6 +153,15 @@ function PostDetails() {
                 )}
             </div>
 
+            {/* //Like button */}
+            {user && (
+                <button
+                    onClick={handleLike}
+                    className={`px-4 py-1 mb-1 rounded ${liked ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+                >
+                    {liked ? 'Unlike' : 'Like'} ({likeCount})
+                </button>
+            )}
             {/* Comment Form */}
             {user ? (
                 <form onSubmit={handleCommentSubmit} className="mb-6">

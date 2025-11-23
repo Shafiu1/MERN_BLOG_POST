@@ -11,7 +11,7 @@ function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Load user from localStorage on mount
+  // Load user from localStorage
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -28,36 +28,76 @@ function App() {
 
   return (
     <>
-      {/* Navigation bar */}
-      <nav className="bg-gray-800 text-white px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0">
-        <div className="flex gap-4">
-          <Link to="/" className="hover:underline">Home</Link>
-          {!user && <Link to="/login" className="hover:underline">Login</Link>}
-          {!user && <Link to="/register" className="hover:underline">Register</Link>}
-          {user && (
-            <>
-              <Link to="/create" className="hover:underline">Create Post</Link>
-            </>
-          )}
-        </div>
-        
-        {user && (
-          <div className="flex items-center gap-3">
-            <span className="text-sm">Welcome, {user.username}</span>
-            <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
-              Logout
-            </button>
+      {/* ----------------------- Navigation Bar ----------------------- */}
+      <nav className="bg-white shadow-md sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex justify-between items-center h-16">
+
+            {/* Logo */}
+            <Link
+              to="/"
+              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text"
+            >
+              Blog App
+            </Link>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-6 text-gray-700 font-medium">
+              <Link to="/" className="hover:text-blue-600 transition duration-200">
+                Home
+              </Link>
+
+              {!user && (
+                <>
+                  <Link to="/login" className="hover:text-blue-600 transition">
+                    Login
+                  </Link>
+                  <Link to="/register" className="hover:text-blue-600 transition">
+                    Register
+                  </Link>
+                </>
+              )}
+
+              {user && (
+                <Link to="/create" className="hover:text-blue-600 transition">
+                  Create Post
+                </Link>
+              )}
+            </div>
+
+            {/* User Info */}
+            {user && (
+              <div className="hidden md:flex items-center gap-4">
+                <span className="text-sm text-gray-600">
+                  👋 Welcome, <span className="font-semibold">{user.username}</span>
+                </span>
+
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-md shadow-sm transition"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+
+            {/* Mobile Hamburger Icon */}
+            <div className="md:hidden">
+              <button className="text-gray-700 text-2xl hover:text-blue-600 transition">
+                ☰
+              </button>
+            </div>
+
           </div>
-        )}
+        </div>
       </nav>
-
-
-      {/* Routes */}
-      <div className="p-6 max-w-4xl mx-auto bg-gray-200">
+     
+      <div className="p-6 max-w-4xl mx-auto bg-gray-100 min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
+
           <Route
             path="/create"
             element={
@@ -70,6 +110,7 @@ function App() {
               )
             }
           />
+
           <Route path="/post/:id" element={<PostDetails />} />
           <Route path="/edit/:id" element={<EditPost />} />
         </Routes>
